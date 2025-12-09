@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TE AMO AMOR ❤</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+        background: black;
+        text-align: center;
+        color: white;
+    }
+
+    video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 2s ease-in;
+    }
+
+    h1, h2 {
+        opacity: 0;
+        animation: aparecer 2s forwards;
+        text-shadow: 0 0 20px black;
+    }
+
+    h1 { animation-delay: 1s; }
+    h2 { animation-delay: 3s; margin-bottom: 20px; }
+
+    @keyframes aparecer {
+        to { opacity: 1; }
+    }
+
+    #inicioBtn {
+        opacity: 0;
+        animation: aparecer 2s forwards;
+        animation-delay: 5s;
+        padding: 12px 25px;
+        font-size: 20px;
+        border: none;
+        background: #ff0099;
+        color: white;
+        border-radius: 15px;
+        cursor: pointer;
+    }
+
+    #contenido {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    img {
+        width: 200px;
+        border-radius: 15px;
+        border: 4px solid white;
+        margin-bottom: 15px;
+        box-shadow: 0 0 15px black;
+    }
+
+    #siBtn, #noBtn {
+        padding: 10px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        margin: 10px;
+        color: white;
+    }
+
+    #siBtn {
+        background: #00e600;
+    }
+
+    #noBtn {
+        background: red;
+        position: absolute;
+        transition: 0.2s;
+    }
+
+    #heartArea {
+        display: none;
+        font-size: 20px;
+        white-space: pre;
+        line-height: 20px;
+        text-shadow: 0 0 10px black;
+    }
+
+    .mensaje {
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-shadow: 0 0 15px black;
+    }
+
+</style>
+</head>
+
+<body>
+
+<video id="video" autoplay muted loop>
+    <source src="fondo.mp4" type="video/mp4">
+</video>
+
+<div id="inicio">
+    <h1>TE AMO AMOR ❤</h1>
+    <h2>PERDÓN ENSERIO TE ADORO COSITA 🥺💞</h2>
+    <button id="inicioBtn">Apretame</button>
+</div>
+
+<div id="contenido">
+    <img src="foto.jpg" alt="">
+    <p>¿Me perdonas?</p>
+
+    <div>
+        <button id="siBtn">Sí ❤‍🩹</button>
+        <button id="noBtn">No 💔</button>
+    </div>
+
+    <p>Si me perdonas te mando lo que quieras mi niña 🥺😋💗</p>
+</div>
+
+<div id="heartArea"></div>
+
+<script>
+    const video = document.getElementById("video");
+    const inicio = document.getElementById("inicio");
+    const contenido = document.getElementById("contenido");
+    const btnInicio = document.getElementById("inicioBtn");
+    const noBtn = document.getElementById("noBtn");
+    const siBtn = document.getElementById("siBtn");
+    const heartArea = document.getElementById("heartArea");
+
+    // Mostrar video progresivo
+    setTimeout(() => video.style.opacity = "1", 500);
+
+    btnInicio.addEventListener("click", () => {
+        inicio.style.display = "none";
+        contenido.style.display = "flex";
+    });
+
+    // Botón NO se mueve
+    function moverBoton() {
+        let x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        let y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+    }
+    noBtn.addEventListener("mouseenter", moverBoton);
+    noBtn.addEventListener("click", moverBoton);
+
+    // Botón Sí → corazón con emojis
+    siBtn.addEventListener("click", () => {
+        contenido.style.display = "none";
+        heartArea.style.display = "block";
+        
+        let mensaje = document.createElement("div");
+        mensaje.classList.add("mensaje");
+        mensaje.textContent = "TE AMOOOO MUCHO ❤🥺";
+        heartArea.appendChild(mensaje);
+
+        const heartLines = [
+            "   ❤❤❤   ❤❤❤",
+            " ❤❤❤❤❤❤❤❤❤",
+            "❤❤❤❤❤❤❤❤❤❤❤",
+            "❤❤❤❤❤❤❤❤❤❤❤",
+            " ❤❤❤❤❤❤❤❤❤",
+            "   ❤❤❤❤❤❤❤",
+            "      ❤❤❤",
+            "        ❤"
+        ];
+
+        let i = 0;
+        let interval = setInterval(() => {
+            if (i >= heartLines.length) {
+                clearInterval(interval);
+            } else {
+                let line = document.createElement("div");
+                line.textContent = heartLines[i];
+                heartArea.appendChild(line);
+                i++;
+            }
+        }, 500);
+    });
+</script>
+
+</body>
+</html>
